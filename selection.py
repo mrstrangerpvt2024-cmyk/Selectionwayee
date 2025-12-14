@@ -1,8 +1,4 @@
-import os
 import requests
-import logging
-import threading
-from http.server import BaseHTTPRequestHandler, HTTPServer
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
 
@@ -536,14 +532,18 @@ def main():
     print("🤖 Bot is running...")
     application.run_polling()
     
-    def run_dummy_server():
+import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+
+def run_dummy_server():
     port = int(os.environ.get("PORT", 10000))
     server = HTTPServer(("0.0.0.0", port), BaseHTTPRequestHandler)
     server.serve_forever()
 
+
 if __name__ == "__main__":
-    threading.Thread(target=run_dummy_server).start()
+    threading.Thread(target=run_dummy_server, daemon=True).start()
     main()
-
-
-
+    
