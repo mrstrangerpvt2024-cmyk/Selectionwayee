@@ -1,10 +1,11 @@
+import os
 import requests
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes
 
 # Bot Configuration
-BOT_TOKEN = "7254519583:AAHCuy42E2GbwNFzfUF1Gjt5oBAoOy_i7Kw"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # Enable logging
 logging.basicConfig(
@@ -536,4 +537,5 @@ def main():
 if __name__ == '__main__':
 
     main()
+
 
