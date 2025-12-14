@@ -534,20 +534,24 @@ def main():
     print("🤖 Bot is running...")
     application.run_polling()
     
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 import threading
-from http.server import BaseHTTPRequestHandler, HTTPServer
+
+
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running successfully")
 
 
 def run_dummy_server():
     port = int(os.environ.get("PORT", 10000))
-    server = HTTPServer(("0.0.0.0", port), BaseHTTPRequestHandler)
+    server = HTTPServer(("0.0.0.0", port), HealthHandler)
     server.serve_forever()
 
 
 if __name__ == "__main__":
     threading.Thread(target=run_dummy_server, daemon=True).start()
     main()
-    
-
-
